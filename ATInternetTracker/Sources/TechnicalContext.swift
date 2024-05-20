@@ -408,8 +408,13 @@ class TechnicalContext: NSObject {
             let screenBounds = WKInterfaceDevice.current().screenBounds
             let screenScale = WKInterfaceDevice.current().screenScale
             #elseif canImport(UIKit)
-            let screenBounds = UIScreen.main.bounds
-            let screenScale = UIScreen.main.scale
+                #if os(visionOS)
+                let screenBounds = CGRect()
+                let screenScale = 0.0
+                #else
+                let screenBounds = UIScreen.main.bounds
+                let screenScale = UIScreen.main.scale
+                #endif
             #else
             let screenBounds = 0
             let screenScale = 0
